@@ -1,64 +1,282 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1, user-scalable=no"
-    />
-<!-- favicon 적용 -->
-<link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="manifest" href="/site.webmanifest">
-<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
-<meta name="msapplication-TileColor" content="#da532c">
-<meta name="theme-color" content="#ffffff">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1, user-scalable=no" />
+        <!-- favicon 적용 -->
+        <link
+            rel="apple-touch-icon"
+            sizes="120x120"
+            href="/apple-touch-icon.png" />
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="32x32"
+            href="/favicon-32x32.png" />
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="16x16"
+            href="/favicon-16x16.png" />
+        <link rel="manifest" href="/site.webmanifest" />
+        <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
+        <meta name="msapplication-TileColor" content="#da532c" />
+        <meta name="theme-color" content="#ffffff" />
 
-<!-- seo 적용 -->
-<meta name="description" content="한국관광공사">
-<meta name="keywords" content="">
+        <!-- seo 적용 -->
+        <meta name="description" content="한국관광공사" />
+        <meta name="keywords" content="" />
 
-    <title>한국관광공사</title>
+        <title>한국관광공사</title>
 
-<!-- html5shiv 적용 -->
-    <!--[if lt IE 9]>
-        <script src="js/html5shiv.js"></script>
+        <!-- html5shiv 적용 -->
+        <!--[if lt IE 9]>
+            <script src="js/html5shiv.js"></script>
         <![endif]-->
 
-<!-- prefix 적용 -->
-    <script src="js/prefixfree.min.js"></script>
-<!-- respond 적용 -->
-    <script src="js/respond.min.js"></script>
-<!-- reset.css 적용 -->
-    <link rel="stylesheet" href="css/reset.css" />
-    
-<!-- font 연결 -->
-    <link href="https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/static/woff2/SUIT.css" rel="stylesheet">
+        <!-- prefix 적용 -->
+        <script src="js/prefixfree.min.js"></script>
+        <!-- respond 적용 -->
+        <script src="js/respond.min.js"></script>
+        <!-- reset.css 적용 -->
+        <link rel="stylesheet" href="css/reset.css" />
 
-<!-- css 연결 -->
-    <link rel="stylesheet" href="css/style.css" />
+        <!-- font 연결 -->
+        <link
+            href="https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/static/woff2/SUIT.css"
+            rel="stylesheet" />
 
-<!-- js 연결 -->
-    <script src="js/index.js"></script>
+        <!-- css 연결 -->
+        <link rel="stylesheet" href="css/style.css" />
 
-</head>
-<body>
-    <!-- header -->
-    <!-- // header -->
+        <!-- Link Swiper's CSS -->
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
+        <!-- Swiper JS -->
+        <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+        <!-- js 연결 -->
+        <script src="js/index.js"></script>
+    </head>
+    <body>
+        <div class="wrap">
+            <!-- header -->
+            <header class="header">
+                <div class="header-top">
+                    <div class="header-top-menu">
+                        <ul>
+                            <li><a href="#">대한민국 구석구석</a></li>
+                            <li><a href="#">VISITKOREA</a></li>
+                            <li><a href="#">한국관광산업포털</a></li>
+                            <li><a href="#">한국관광데이터랩</a></li>
+                            <li><a href="#">한국관광콘텐츠랩</a></li>
+                            <li>
+                                <a href="#"
+                                    ><img src="img/img_bi_b.svg" alt="메뉴로고"
+                                /></a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="header-top-lang">
+                        <ul>
+                            <li><a href="#">ENGLISH</a></li>
+                            <li><a href="#">JAPANESE</a></li>
+                            <li><a href="#">CHINESE</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="header-bottom">
+                    <nav class="gnb">
+                        <ul class="mainmenu">
+                            <li>
+                                <a href="#"
+                                    ><img src="img/logo_kto.svg" alt=""
+                                /></a>
+                            </li>
+                            <li>
+                                <a href="#">정보공개</a>
+                                <div class="depth">
+                                    <span class="depth-title"> 정보공개 </span>
+                                    <ul class="depth-list">
+                                        <a href="#">정보공개제도</a>
+                                        <li><a href="#">제도 안내</a></li>
+                                        <li><a href="#">정보공개 청구</a></li>
+                                        <li>
+                                            <a href="#">비공개 대상 정보</a>
+                                        </li>
+                                        <li><a href="#">불복구제절차</a></li>
+                                        <li><a href="#">수수료</a></li>
+                                    </ul>
+                                    <ul class="depth-list">
+                                        <a href="#">사업실명제</a>
+                                    </ul>
+                                    <ul class="depth-list">
+                                        <a href="#">정보목록</a>
+                                    </ul>
+                                    <ul class="depth-list">
+                                        <a href="#">사전정보 목록</a>
+                                    </ul>
+                                    <ul class="depth-list">
+                                        <a href="#">공공데이터 개방</a>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li>
+                                <a href="#">주요사업</a>
+                                <span class="depth-title">주요사업</span>
+                                <ul class="depth-list">
+                                    <a href="#">국제관광지원</a>
+                                </ul>
+                                <ul class="depth-list">
+                                    <a href="#">국민관광지원</a>
+                                </ul>
+                                <ul class="depth-list">
+                                    <a href="#">관광산업지원</a>
+                                </ul>
+                                <ul class="depth-list">
+                                    <a href="#">디지털전환지원</a>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#">알림마당</a>
+                                <span class="depth-title">알림마당</span>
+                                <ul class="depth-list">
+                                    <a href="#">KTO 소식</a>
+                                </ul>
+                                <ul class="depth-list">
+                                    <a href="#">공고</a>
+                                    <li><a href="#">공고/공모</a></li>
+                                    <li><a href="#">입찰공고</a></li>
+                                </ul>
+                                <ul class="depth-list">
+                                    <a href="#">보도자료</a>
+                                </ul>
+                                <ul class="depth-list">
+                                    <a href="#">관광도우미</a>
+                                    <li><a href="#">1330 관광통역안내</a></li>
+                                    <li><a href="#">전국관광안내소</a></li>
+                                    <li><a href="#">관광경찰</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#">국민참여</a>
+                                <span class="depth-title">
+                                    <ul class="depth-list">
+                                        <a href="#">자주 묻는 질문</a>
+                                    </ul>
+                                    <ul class="depth-list">
+                                        <a href="#">제보합니다</a>
+                                        <li><a href="#">일반민원</a></li>
+                                        <li><a href="#">위반신고</a></li>
+                                        <li><a href="#">예산낭비신고</a></li>
+                                        <li><a href="#">익명.대리신고</a></li>
+                                    </ul>
+                                    <ul class="depth-list">
+                                        <a href="#">관광정보 등록</a>
+                                    </ul>
+                                    <ul class="depth-list">
+                                        <a href="#">똑똑한 문의</a>
+                                    </ul>
+                                    <ul class="depth-list">
+                                        <a href="#">적극행정</a>
+                                    </ul>
+                                    <ul class="depth-list">
+                                        <a href="#">시설개방</a>
+                                        <li><a href="#">강의실/기숙사</a></li>
+                                        <li><a href="#">강당</a></li>
+                                        <li><a href="#">체육시설</a></li>
+                                        <li><a href="#">주차장</a></li>
+                                        <li><a href="#">기타</a></li>
+                                    </ul>
+                                    <ul class="depth-list">
+                                        <a href="#">똑똑한 제안</a>
+                                    </ul>
+                                    <ul class="depth-list">
+                                        <a href="#">기업성장응답센터</a>
+                                    </ul>
+                                    <ul class="depth-list">
+                                        <a href="#">칭찬합시다</a>
+                                    </ul>
+                                    <ul class="depth-list">
+                                        <a href="#">관광불편신고</a>
+                                    </ul>
+                                </span>
+                            </li>
+                            <li><a href="#">KTO경영</a></li>
+                            <li><a href="#">공사소개</a></li>
+                            <li><a href="#">채용정보</a></li>
+                        </ul>
+                    </nav>
+                    <div class="header-side-icon">
+                        <a href="#"><img src="" alt="" /></a>
+                        <a href="#"><img src="" alt="" /></a>
+                    </div>
+                </div>
+            </header>
+            <!-- // header -->
 
-    <!-- visual -->
-    <!-- // visual -->
+            <!-- visual -->
+            <section class="visual">
+                <div class="swiper visual-sw">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+                            <img
+                                src="img/main_visual_01.png"
+                                alt="메인이미지" />
+                        </div>
+                        <div class="swiper-slide">
+                            <img
+                                src="img/main_visual_05.png"
+                                alt="메인이미지" />
+                        </div>
+                        <div class="swiper-slide">
+                            <img
+                                src="img/main_visual_08.png"
+                                alt="메인이미지" />
+                        </div>
+                        <div class="swiper-pagination"></div>
+                    </div>
+                </div>
+                <!-- Initialize Swiper -->
+                <script>
+                    let swiper = new Swiper(".visual-sw", {
+                        pagination: {
+                            el: ".swiper-pagination",
+                            clickable: true,
+                            effect: "fade",
+                            renderBullet: function (index, className) {
+                                return (
+                                    '<span class="' +
+                                    className +
+                                    '">' +
+                                    (index + 1) +
+                                    "</span>"
+                                );
+                            },
+                        },
+                    });
+                </script>
+            </section>
+            <!-- // visual -->
 
-    <!-- notice -->
-    <!-- // notice -->
+            <!-- notice -->
+            <section class="notice"></section>
+            <!-- // notice -->
 
-    <!-- PRgov -->
-    <!-- // PRgov -->
+            <!-- PRgov -->
+            <section class="prgov"></section>
+            <!-- // PRgov -->
 
-    <!-- info -->
-    <!-- // info -->
+            <!-- info -->
+            <section class="info"></section>
+            <!-- // info -->
 
-    <!-- footer -->
-    <!-- // footer -->
-</body>
+            <!-- footer -->
+            <footer class="footer"></footer>
+            <!-- // footer -->
+        </div>
+    </body>
 </html>

@@ -1,0 +1,120 @@
+function fn_sendSns(sns, title){
+	event.stopPropagation();
+
+ 	var txt = title;
+	var url = document.location.href;
+
+    var o;
+    var _url = encodeURIComponent(url);
+    var _txt = encodeURIComponent(txt);
+    var _br  = encodeURIComponent('\r\n');
+
+    switch(sns){
+        case 'facebook':
+            o = {
+	                method	:'popup',
+	                url		:'https://www.facebook.com/sharer/sharer.php?u=' + _url
+	            };
+            break;
+
+        case 'twitter':
+            o = {
+	                method	:'popup',
+	                url		:'http://twitter.com/intent/tweet?text=' + _txt + '&url=' + _url
+	            };
+            break;
+
+        case 'naverblog':
+            o = {
+	                 method	:'popup',
+	                 url	:'https://share.naver.com/web/shareView.nhn?url=' + _url + '&title=' + _txt
+                 };
+             break;
+
+        case 'naverband':
+            o = {
+	                 method	:'popup',
+	                 url	:'https://band.us/plugin/share?route=' + _url + '&body=' + _txt
+                 };
+             break;
+
+        case 'kakaotalk':
+        	Kakao.Link.sendDefault({
+        	      objectType: 'text',
+        	      text: txt,
+        	      link: {
+        	        mobileWebUrl: url,
+        	        webUrl: url,
+        	      },
+        	    })
+	       	 return;
+	       	 break;
+
+        case 'kakaostory':
+        	 Kakao.Story.share({
+    	        url: url,
+    	        text: txt
+    	      });
+        	 return;
+        	 break;
+
+        case 'instagram':
+             break;
+
+        default:
+            alert('This SNS is not supported.');
+            return false;
+    }
+
+    switch(o.method)
+    {
+        case 'popup':
+            window.open(o.url, 'pop', 'width=500, height=500' );
+            break;
+    }
+}
+
+function fn_saveBookmark(siteNm, pageNm, pageUrl){
+	event.stopPropagation();
+
+	if(confirm("해당 페이지를 스크랩 하시겠습니까?")){
+		var data = { "siteNm": encodeURIComponent(siteNm), "pageNm": encodeURIComponent(pageNm), "pageUrl": encodeURIComponent(pageUrl) };
+
+		$.ajax({
+			type 		: "post",
+			url			: '/co/COScrap/action',
+			dataType	: 'text', //전송받을 데이터의 타입
+			data		: data,
+			contentType	: 'application/x-www-form-urlencoded; charset=UTF-8',
+			success		: function(data) {
+				if(data.indexOf('nologin') != -1){
+					if(confirm("회원만 이용가능합니다.\n가입된 회원아이디로 로그인 해주세요.")){
+						var retUrl = document.location.href;
+						location.href = "/login?retUrl=" + encodeURIComponent(retUrl);
+					}
+				}else if(data=="true"){
+					if(confirm("스크랩이 완료되었습니다.\n마이페이지 > 스크랩 메뉴로 이동하시겠습니까?")){
+						location.href = "/IC060501";
+					}
+				}else{
+					alert("저장이 실패하였습니다.");
+				}
+			},
+			error		: function(data, status, err) {
+			}
+		});
+	}
+}
+
+function fn_copyUrl(){
+	event.stopPropagation();
+
+	var _temp = $("<input>");
+	$("body").append(_temp);
+	_temp.val(document.location.href).select();
+	document.execCommand("copy");
+	_temp.remove();
+
+	alert(document.location.href + "\n URL이 복사되었습니다.");
+	$('.btn-linkurl').focus();
+}

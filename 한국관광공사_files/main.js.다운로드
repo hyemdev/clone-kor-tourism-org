@@ -1,0 +1,356 @@
+
+
+
+function smoothMotionType1(classname, mod) {
+    motionObj2 = new SmoothMotion(classname);
+    motionObj2.execution(mod);
+    }
+    function SmoothMotion(cls) {
+    this.obj = $('.' + cls);
+}
+SmoothMotion.prototype.execution = function(mod) {
+    var that = this.obj,
+    st = $(window).scrollTop(),
+    winH = window.innerHeight,
+    i = 0;
+    for (; i < that.length; i++) {
+        if(!that.eq(i).hasClass('js-smooth-end')){
+            if (st + winH / mod > that.eq(i).offset().top) {
+                that.eq(i).removeClass('transition-none').addClass('js-smooth-end');                
+            }
+        }
+    }
+}; 
+
+$(function(){       
+    
+    //visual slide
+    if($('.visual-slide .swiper-slide').length > 1){
+        var autoPlaySpeed = 4000;
+        //var $slideBar = $('.slide-loading-bar');
+        var visualSlide = new Swiper('.swiper-container.visual-slide', {  
+            autoplay: {
+                delay: autoPlaySpeed,
+                disableOnInteraction: false,
+            },
+            speed : autoPlaySpeed,
+            slidesPerView: 'auto',
+            spaceBetween: 0,
+            slidesPerGroup: 1,  
+            effect: "fade",
+            pagination: {
+                el: '.tour-tab-nav',
+                clickable: true, 
+                renderBullet: function (index, className) {
+                    if(index == 0){
+                        return '<button type="button" class="'+className+'"><span>국내여행정보</span></button>';
+                    } else if(index == 1){
+                        return '<button type="button" class="'+className+'"><span>관광기업지원</span></button>';
+                        //return '<li class="'+className+'"><a href="#"><span>관광기업지원</span></a></li>';
+                    } else if(index == 2){
+                        return '<button type="button" class="'+className+'"><span>관광데이터</span></button>';
+                    } 
+                }
+            },           
+            on: {
+                init: function () {      
+                    var index = this.activeIndex;
+                    //console.log("visualslide init - slide active index : " + index);
+                    $('.slide-loading-bar').addClass('active');  
+                    mainVisualRefresh(index);                
+                },                          
+                /*slideChange: function() {    
+                    var index = this.activeIndex;
+                    //console.log("visualslide slideChange - slide active index : " + index);
+                    mainVisualRefresh(index);
+                },  */
+                slideChangeTransitionStart : function(){
+                    var index = this.activeIndex;
+                    //console.log("visualslide slideChange - slide active index : " + index);                    
+                    $('.slide-loading-bar').removeClass('active')
+                    setTimeout(() => {
+                        $('.slide-loading-bar').addClass('active');
+                    }, 100);
+                    mainVisualRefresh(index);
+                },                                    
+                setTransition: function (speed) {
+                    var swiper = this;
+                    for (var i = 0; i < swiper.slides.length; i++) {
+                        swiper.slides[i].style.transition = speed + "ms";
+                        //swiper.slides[i].querySelector(".visual-img").style.transition =
+                        //speed + "ms";
+                    }                    
+                }   
+            }  
+        });
+    }
+
+    function mainVisualRefresh(index){
+           
+       
+        //접근성
+        $('.visual-slide .swiper-slide').attr('aria-hidden','true')
+        $('.visual-slide .swiper-slide.swiper-slide-active').attr('aria-hidden','false');
+
+        $('.visual-slide .swiper-slide').attr('aria-hidden','true');
+        $('.visual-slide .swiper-slide:eq('+index+')').attr('aria-hidden','false');
+        //$('.visual-slide .swiper-slide').find("a").attr("tabIndex","-1");
+        //$('.visual-slide .swiper-slide:eq('+index+')').find("a").attr("tabIndex","0");
+        
+        //motion
+        $mainVisualImage = $('.visual-slide .swiper-slide:eq('+index+')').find(".visual-img");        
+        TweenMax.killTweensOf($mainVisualImage);
+        TweenMax.fromTo($mainVisualImage, 2, { transform: "scale(1.6)" }, {transform: "scale(1) rotate(0.002deg)",force3D: true,ease: Circ.easeOut,delay: 0});	 
+        // var $slideBar = $('.slide-loading-bar');   
+        // TweenMax.set($slideBar, {width:"0"});                
+        // TweenMax.to($slideBar, autoPlaySpeed / 5000, {width:"100%"});  
+    }
+
+    setTimeout(function() { 
+        //main visual animation
+        smoothMotionType1('main-visual-title', 1.1);
+        smoothMotionType1('tour-tab-nav', 1.1);
+        smoothMotionType1('tour-tab-content', 1.1);
+        smoothMotionType1('js-top-to-bottom', 1.1);
+    }, 600);
+         
+    //mainNewsSlide
+    var mainNewsSlide = new Swiper('.swiper-container.main-news-slide', {   
+        autoplay: {
+            delay: 4000,
+            disableOnInteraction: false,
+        },
+        speed: 1500,
+        slidesPerView: 'auto',
+        spaceBetween: 10,
+        slidesPerGroup: 1,   
+        loop: true,
+        pagination: {
+            el: '.main-news-slide .slide-control .count',
+            type: "fraction",
+            formatFractionCurrent: function (number) {
+                return ('0' + number).slice(-2);
+            },
+            formatFractionTotal: function (number) {
+                return ('0' + number).slice(-2);
+            },
+            renderFraction: function (currentClass, totalClass) {
+                return '<span class="' + currentClass + '"></span>' +
+                    ' / ' +
+                    '<span class="' + totalClass + '"></span>';
+            }
+        },
+        on: {
+            init: function () {
+                //console.log("newsslide init");
+                $('.main-news-slide .swiper-slide').attr('aria-hidden','true');
+                $('.main-news-slide .swiper-slide.swiper-slide-active').attr('aria-hidden','false');
+                $('.main-news-slide .swiper-slide.swiper-slide-active').find("a").attr("tabIndex","0");
+            },
+            slideChange: function() {    
+                //console.log("newsslide slideChange");
+                var index = this.activeIndex;
+                $('.main-news-slide .swiper-slide').attr('aria-hidden','true');
+                $('.main-news-slide .swiper-slide:eq('+index+')').attr('aria-hidden','false');
+                $('.main-news-slide .swiper-slide').find("a").attr("tabIndex","-1");
+                $('.main-news-slide .swiper-slide:eq('+index+')').find("a").attr("tabIndex","0");
+            }
+        },
+        navigation: {
+            nextEl: '.main-news-slide .slide-control .btn-next',
+            prevEl: '.main-news-slide .slide-control .btn-prev'
+        }        
+    });
+    
+    $('.main-news-slide .slide-control .btn-play').on('click',function(){
+        if($(this).hasClass('active')){
+            $(this).removeClass('active');
+            mainNewsSlide.autoplay.start();
+            $(this).find('span').text('알림마당 슬라이드 정지 버튼')
+        } else {
+            $(this).addClass('active')
+            mainNewsSlide.autoplay.stop();
+            $(this).find('span').text('알림마당 슬라이드 시작 버튼')
+        }       
+        return false;
+    });   
+    
+    //relatedSlide     
+    var relatedSlide = new Swiper('.swiper-container.related-slide ', { 
+        autoplay: {
+            delay: 4000,
+            disableOnInteraction: false,
+        },
+        speed: 1500,
+        loop:true,
+        slidesPerView: 'auto',      
+        spaceBetween: 0,
+        //allowTouchMove:true,   
+        //preventClicks: false,        
+        on: {
+            init: function () {
+                $('.related-slide .swiper-slide').attr('aria-hidden','true');
+                $('.related-slide .swiper-slide.swiper-slide-active').attr('aria-hidden','false');
+                $('.related-slide .swiper-slide.swiper-slide-active').find("a").attr("tabIndex","0");
+            },
+            slideChange: function() {    
+                var index = this.activeIndex;                  
+                $('.related-slide .swiper-slide').attr('aria-hidden','true');
+                $('.related-slide .swiper-slide:eq('+index+')').attr('aria-hidden','false');
+                $('.related-slide .swiper-slide').find("a").attr("tabIndex","-1");
+                $('.related-slide .swiper-slide:eq('+index+')').find("a").attr("tabIndex","0");
+            }
+            /*
+            slideChangeTransitionStart: function() {  
+                var index = this.activeIndex; 
+                var ind = index+8;              
+                $('.related-slide .swiper-slide').attr('aria-hidden','true');
+                $('.related-slide .swiper-slide').slice(index,ind).attr('aria-hidden','false');
+                $('.related-slide .swiper-slide').find("a").attr("tabIndex","-1");
+                $('.related-slide .swiper-slide').slice(index,ind).find("a").attr("tabIndex","0");
+            }*/
+        },
+        navigation: {
+            nextEl: '.main-related .slide-control .btn-next',
+            prevEl: '.main-related .slide-control .btn-prev'
+        }       
+    });  
+
+    $('.main-related .slide-control .btn-play').on('click',function(){
+        if($(this).hasClass('active')){
+            console.log("시작됨 정지버튼으로 전환");
+            $(this).removeClass('active');
+            relatedSlide.autoplay.start();
+            $(this).find('span').text('관련사이트 슬라이더 정지 버튼')
+        } else {
+            console.log("정지됨 시작버튼으로 전환");
+            $(this).addClass('active')
+            relatedSlide.autoplay.stop();
+            $(this).find('span').text('관련사이트 슬라이더 시작 버튼')
+        }       
+        return false;
+    })     
+       
+    $('.move-btn').on('click', function(){   
+                  
+        var screenWidth = $(window).width(); 
+        //btn
+        if(screenWidth < 1024){                          
+        } else {
+           var businessActiveIndex =  $(this).index();
+            $(this).parent().addClass('active');     
+            $(this).parent().siblings().removeClass('active');  
+            mainBusinessActive(businessActiveIndex);                          
+        } 
+    }); 
+        
+    
+});//$function        
+
+
+
+//main visual : mobile 100vh 주소바 등 제외 영역 계산    
+function setScreenSize() {
+    var vh = window.innerHeight * 0.01;  
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+}  
+
+//businessSlider    
+var bizSlider = undefined;
+
+function initSwiper(){         
+    //console.log(screenWidth);
+    var screenWidth = $(window).width(); 
+
+    //if(screenWidth < 1024){  
+    if(screenWidth < 1024 && bizSlider == undefined){
+        bizSlider = new Swiper(".business-slide", {
+            slidesPerView: 'auto',
+            // spaceBetween:0,
+            // simulateTouch: false,
+            // loop: true,
+            // centeredSlides: false,
+            // autoplay: {
+            //     delay: 4000,
+            //     disableOnInteraction: false,
+            // },          
+        });     
+        var businessActiveIndex = 0;    
+        mainBusinessActive(businessActiveIndex);  
+
+    } else if(screenWidth >= 1024 && bizSlider != undefined){       
+        bizSlider.destroy();
+        bizSlider = undefined;   
+        if(businessActiveIndex){
+            businessActiveIndex == businessActiveIndex;            
+        } else{            
+            businessActiveIndex == 0;
+        }  
+        mainBusinessActive(businessActiveIndex);                 
+    }
+} 
+
+function mainBusinessActive(businessActiveIndex){ 
+    var screenWidth = $(window).width(); 
+    var businessActiveIndex = $('.business-slide .slide.active').index();
+    //btn      
+    if(businessActiveIndex){
+        businessActiveIndex == businessActiveIndex;
+    } else{        
+        businessActiveIndex == 0;
+    }  
+    if(screenWidth < 1024){       
+        $('.main-business .slide').find('.txt-wrap .btn-go').animate({opacity: "1"}, 400);
+    } else {     
+        $('.main-business .slide').find('.txt-wrap .btn-go').animate({opacity: "0"}, 400);
+        var $mainBusinessText1 = $('.main-business .slide:eq('+businessActiveIndex+')').find(".txt-wrap strong");
+        var $mainBusinessText2 = $('.main-business .slide:eq('+businessActiveIndex+')').find(".txt-wrap p");
+        var $mainBusinessBtn = $('.main-business .slide:eq('+businessActiveIndex+')').find(".btn-go");    
+        $mainBusinessBtn.show();   
+        TweenMax.fromTo($mainBusinessText1, 0.4, {transform: "translateY(100%)",autoAlpha: 0}, {transform: "translateY(0%)",autoAlpha: 1,force3D: true,ease: Circ.easeOut,delay: 0.4});
+        TweenMax.fromTo($mainBusinessText2, 0.4, {transform: "translateY(100%)",autoAlpha: 0}, {transform: "translateY(0%)",autoAlpha: 1,force3D: true,ease: Circ.easeOut,delay: 0.6});
+        TweenMax.fromTo($mainBusinessBtn, 0.8, {transform: "translateY(50%)",autoAlpha: 0}, {transform: "translateY(0%)",autoAlpha: 1,force3D: true,ease: Circ.easeOut,delay: 0.8});   
+    }
+    
+}
+
+$(window).bind('load', function(){    
+    //businessSwiper
+    initSwiper();   
+    //applyOrientation();   
+});  
+
+//section animation
+$(window).bind('scroll',function(){	   
+    //motion   
+    smoothMotionType1('js-bottom-to-top', 1.1);
+    smoothMotionType1('js-top-to-bottom', 1.1);
+});
+
+function setScreenSize() {
+    var vh = window.innerHeight * 0.01;  
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+}  
+
+
+function applyOrientation(){ 
+    setScreenSize();        
+    if (isLandscape) {       
+        //setScreenSize();        
+    } else {        
+        //setScreenSize();
+    }
+}
+
+//main visual : mobile 100vh 주소바 등 제외 영역 계산    
+/*
+function setScreenSize() {
+    var vh = window.innerHeight * 0.01;  
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+}  
+setScreenSize();
+
+window.addEventListener("resize", () => {
+    setScreenSize();
+});
+*/

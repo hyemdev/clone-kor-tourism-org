@@ -1,0 +1,42 @@
+.visual {
+    position: absolute;
+    top: 0;
+    left: 0;
+    /* z-index: ; */
+}
+
+.visual-sw {
+    width: 100%;
+    height: 100%;
+}
+
+.visual-sw .swiper-slide {
+    text-align: center;
+    font-size: 18px;
+    background: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.visual-sw .swiper-slide img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.visual-sw .swiper-pagination-bullet {
+    width: 100px;
+    height: 40px;
+    text-align: center;
+    line-height: 20px;
+    font-size: 12px;
+    color: #000;
+    opacity: 1;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.visual-sw .swiper-pagination-bullet-active {
+    color: #000;
+}

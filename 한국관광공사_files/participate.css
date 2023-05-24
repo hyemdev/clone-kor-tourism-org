@@ -1,0 +1,513 @@
+@charset "UTF-8";
+/* participate : 국민참여 */
+.participate {
+  display: block;
+}
+
+.ask-title {
+  margin: 4rem 0;
+  text-align: center;
+}
+
+.ask-title p {
+  font-size: 3.2rem;
+  font-weight: bold;
+}
+
+.cert-form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  gap: 1.2rem;
+  margin-top: 4rem;
+  /*&:after {
+content: '';
+display: block;
+cleaR: both;
+}
+*/
+}
+
+@media only screen and (min-width: 48em) {
+  .cert-form {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+  }
+}
+
+.cert-form li {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  -webkit-box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.1);
+          box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.1);
+  padding: 6.0rem 0;
+  /*
+&.cert-sms {
+margin-right: 1%;
+background-image: url(/humanframe/theme/kto/assets/image/content/ico-certi01.png);      
+}
+&.cert-easy {
+background-image: url(/humanframe/theme/kto/assets/image/content/ico-certi02.png);
+}*/
+}
+
+.cert-form li .icon {
+  display: block;
+  margin: 0 auto;
+  width: 12rem;
+  height: 12rem;
+  background-repeat: no-repeat;
+  background-position: center 0;
+  background-size: 12rem 12rem;
+}
+
+.cert-form li .icon.is-cert-sms {
+  background-image: url(/humanframe/theme/kto/assets/image/content/ico-certi01.png);
+}
+
+.cert-form li .icon.is-cert-easy {
+  background-image: url(/humanframe/theme/kto/assets/image/content/ico-certi02.png);
+}
+
+.cert-form li span {
+  display: block;
+  font-size: 2.4rem;
+  margin-top: 2.0rem;
+  font-weight: 600;
+  color: #222;
+  text-align: center;
+}
+
+.cert-form li span em {
+  display: block;
+  font-size: 1.8rem;
+}
+
+@media only screen and (min-width: 64em) {
+  .cert-form li span em {
+    display: inline;
+    font-size: 2.4rem;
+  }
+}
+
+.cert-form li .btn-cert {
+  display: block;
+  width: 20rem;
+  max-width: 80%;
+  background-color: #4A5677;
+  margin: 4rem auto 0;
+}
+
+.recei-content {
+  margin-top: 4rem;
+  text-align: center;
+}
+
+.recei-content .btn-group {
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.recei-content .btn-group a {
+  width: 43rem;
+}
+
+.recei-div {
+  height: 34rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  background-color: #f8f8f8;
+  -webkit-box-orient: vertical;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.recei-div span:first-of-type {
+  color: #4A5677;
+  font-size: 3.2rem;
+  font-weight: 600;
+}
+
+.recei-div span:last-of-type {
+  margin-top: 1rem;
+  font-weight: 400;
+}
+
+.step-basic.tab06 li {
+  width: 16.6%;
+}
+
+.step-basic.tab06 li div {
+  height: 15rem;
+}
+
+.step-basic.tab06 li div span {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  height: 5rem;
+}
+
+.step-basic.tab06 li div .icon-parti-step01 {
+  background: url(/humanframe/theme/kto/assets/image/ico/ico_parti_step01.png) no-repeat center;
+}
+
+.step-basic.tab06 li div .icon-parti-step02 {
+  background: url(/humanframe/theme/kto/assets/image/ico/ico_parti_step02.png) no-repeat center;
+}
+
+.step-basic.tab06 li div .icon-parti-step03 {
+  background: url(/humanframe/theme/kto/assets/image/ico/ico_parti_step03.png) no-repeat center;
+}
+
+.step-basic.tab06 li div .icon-parti-step04 {
+  background: url(/humanframe/theme/kto/assets/image/ico/ico_parti_step04.png) no-repeat center;
+}
+
+.step-basic.tab06 li div .icon-parti-step05 {
+  background: url(/humanframe/theme/kto/assets/image/ico/ico_parti_step05.png) no-repeat center;
+}
+
+.step-basic.tab06 li div .icon-parti-step06 {
+  background: url(/humanframe/theme/kto/assets/image/ico/ico_parti_step06.png) no-repeat center;
+}
+
+.parti-bookmark {
+  margin-top: 1.5rem;
+  padding: 2.5rem;
+  border-radius: 8px;
+  background-color: #FCF4F6;
+}
+
+.parti-bookmark dt {
+  margin-bottom: 1.2rem;
+  font-size: 2rem;
+  font-weight: 600;
+  color: #222;
+  background: url(/humanframe/theme/kto/assets/image/ico/ico_book.svg) no-repeat 0 center;
+  padding-left: 2rem;
+}
+
+.parti-bookmark dd {
+  font-size: 1.6rem;
+  font-weight: 400;
+  margin-bottom: 1rem;
+}
+
+.parti-bookmark dd:last-of-type {
+  margin-bottom: 0;
+}
+
+.parti-bookmark dd strong {
+  color: #D22A49;
+  font-weight: 600;
+}
+
+.parti-adm01 {
+  margin-bottom: 2rem;
+}
+
+.parti-adm01:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+.parti-adm01 dt {
+  float: left;
+  width: 18rem;
+  height: 10rem;
+  border: 1px solid #BAC1D4;
+  background-color: #F6F6F7;
+  border-radius: 8px;
+  font-weight: 600;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.parti-adm01 dd {
+  float: left;
+  width: calc(100% - 20rem);
+  margin-left: 2rem;
+  height: 10rem;
+  background-color: #4A5677;
+  border-radius: 8px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  color: #fff;
+  font-size: 2.5rem;
+}
+
+.parti-adm02 {
+  margin-bottom: 1rem;
+}
+
+.parti-adm02:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+.parti-adm02 dt {
+  float: left;
+  width: 18rem;
+  height: 10rem;
+  border: 1px solid #BAC1D4;
+  background-color: #F6F6F7;
+  border-radius: 8px;
+  font-weight: 600;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.parti-adm02 dd {
+  float: left;
+  width: calc(100% - 20rem);
+  margin-left: 2rem;
+}
+
+.parti-adm02 dd ul:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+.parti-adm02 dd ul li {
+  float: left;
+  width: 49%;
+  color: #fff;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  padding: 1rem;
+}
+
+.parti-adm02 dd ul li:first-of-type {
+  margin-right: 2%;
+  border-radius: 50px;
+  background-color: #62A5E5;
+  height: 10rem;
+}
+
+.parti-adm02 dd ul li:last-of-type {
+  border-radius: 50px;
+  background-color: #FF5B73;
+  height: 10rem;
+}
+
+.parti-adm03:before {
+  content: '';
+  display: block;
+  width: calc(100% - 175px);
+  height: 7.5rem;
+  background: url(/humanframe/theme/kto/assets/image/content/Polygon.png) no-repeat 50% center;
+  margin-left: 180px;
+}
+
+.parti-adm03:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+.parti-adm03 dt {
+  float: left;
+  width: 18rem;
+  height: 51rem;
+  border: 1px solid #BAC1D4;
+  background-color: #F6F6F7;
+  border-radius: 8px;
+  font-weight: 600;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.parti-adm03 dd {
+  float: left;
+  width: calc(100% - 20rem);
+  margin-left: 2rem;
+}
+
+.parti-adm03 dd > ul:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+.parti-adm03 dd > ul > li {
+  float: left;
+  width: 48%;
+  margin: 0 2% 1rem 0;
+  border: 1px solid #BAC1D4;
+  background-color: #F6F6F7;
+  border-radius: 8px;
+  padding: 2rem;
+  height: 25rem;
+}
+
+.parti-adm03 dd > ul > li:nth-of-type(2n) {
+  margin-right: 0;
+}
+
+.parti-adm03 dd > ul > li p {
+  font-weight: 600;
+  color: #444;
+}
+
+.parti-adm03 dd > ul > li ul {
+  margin-top: 1rem;
+  padding: 1.1rem 1.5rem;
+  background-color: #fff;
+  border-radius: 8px;
+}
+
+.parti-adm03 dd > ul > li ul li {
+  position: relative;
+  padding-left: 1rem;
+  margin-bottom: 1rem;
+  font-size: 1.6rem;
+}
+
+.parti-adm03 dd > ul > li ul li:last-of-type {
+  margin-bottom: 0;
+}
+
+.parti-adm03 dd > ul > li ul li:before {
+  content: "";
+  display: inline-block;
+  overflow: hidden;
+  position: absolute;
+  left: 0;
+  top: 0;
+  top: 1rem;
+  width: 2px;
+  height: 2px;
+  background-color: #444;
+}
+
+.other-list li {
+  padding: 4rem 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.other-list li:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+.other-list li img {
+  float: left;
+  width: 310px;
+  height: 200px;
+  margin-right: 2%;
+}
+
+@media only screen and (max-width: 48em) {
+  .other-list li img {
+    float: none;
+    width: 100%;
+    height: auto;
+  }
+}
+
+.other-list li div {
+  float: left;
+  width: calc(100% - 340px);
+  position: relative;
+  height: 200px;
+}
+
+@media only screen and (max-width: 48em) {
+  .other-list li div {
+    float: none;
+    width: 100%;
+    margin-top: 2rem;
+  }
+}
+
+.other-list li div p {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #222;
+  margin-bottom: 1rem;
+}
+
+.other-list li div span {
+  display: block;
+  font-weight: 600;
+  font-size: 1.6rem;
+  color: #222;
+  margin-bottom: 1rem;
+}
+
+.other-list li div span strong {
+  color: #8F8F8F;
+  width: 5.6rem;
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.other-list li div a {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}

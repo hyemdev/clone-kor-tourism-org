@@ -1,0 +1,109 @@
+//content 화면별 스크립트
+$(function(){
+
+
+
+    //aboutkto - map
+    $('.map-pin li > a, .map-pin2 li > a').on('click', function () {
+        idx = $(this).parent().index();
+        if ($(this).parent().hasClass('active')) {
+            $('.map-pin > li:eq('+idx+'), .map-pin2 > li:eq('+idx+')').removeClass('active');
+        } else {
+            $('.map-pin > li:eq('+idx+'), .map-pin2 > li:eq('+idx+')').addClass('active').siblings().removeClass('active');
+        }
+        return false
+    });
+
+    //aboutkto - org 개발페이지 삭제
+    // $('.d2 > li .arrow').on('click', function(){
+    //     $(this).toggleClass('active');
+    //     if($(this).parent().parent().hasClass('active')){
+    //         $(this).parent().parent().removeClass('active');
+    //     } else {
+    //         $(this).parent().parent().addClass('active').siblings().removeClass('active');
+    //     }
+    // });
+
+    //board view common
+    $('.board-view-meta-state .btn-more').on('click', function(){
+        console.log('mobile meta view');
+        if($('html').hasClass('is-mobile')){
+            if($(this).parent().hasClass('is-active')){
+                $(this).parent().removeClass('is-active');
+            } else {
+                $(this).parent().addClass('is-active');
+            }
+        } else {
+            $('.board-view-meta-state').removeClass('is-active');
+        }
+
+    });
+
+    //global map
+    $('.global-map ul li a').click(function(){
+        $('html,body').animate({scrollTop:$(this.hash).offset().top - 15},500);
+        $(this.hash).parent().parent().addClass('on').siblings().removeClass('on');
+        return false;
+    });
+    $('.global-map ul li a').each(function(index){
+        $(this).attr('href','#global-list' + index);
+    });
+    $('.global-table tbody tr td a').each(function(index){
+        $(this).attr('id','global-list' + index);
+    });
+
+    //sitemap
+    $('.sitemap > li > a').click(function(){
+        if($(this).parent().find('ul').length != 0){
+            $(this).parent().toggleClass('active');
+			return false;
+        }
+    });
+
+    //공사소개 - 오시는 길 : 지도 팝업
+    $('a[href="#popupViewMap"]').click(function(){
+        //popupOpen('popupViewMap');
+        ui.popup.open('popupViewMap');
+    });
+
+    //공사소개 - 역대 CEO : CEO 상세정보 팝업
+    $('a[href="#popupViewCeo"]').click(function(){
+        //popupOpen('popupViewCeo');
+        ui.popup.open('popupViewCeo');
+    });
+
+    // 팝업닫기 공통
+    $('.popup-wrap .popup-close-btn').click(function(){
+        var id = $(this).closest('.popup-wrap').attr('id');
+        ui.popup.close(id);
+    });
+
+    $('.popup-tool .popup-close-btn').click(function(){
+        var id = $(this).closest('.popup-tool').attr('id');
+        ui.popup.close(id);
+    });
+
+    //개인정보처리방침
+    $('a[href="#popupViewPerinfo01"]').click(function(){
+        ui.popup.open('popupViewPerinfo01');
+        return false;
+    });
+    $('a[href="#popupViewPerinfo02"]').click(function(){
+        ui.popup.open('popupViewPerinfo02');
+        return false;
+    });
+    $('a[href="#popupViewPerinfo03"]').click(function(){
+        ui.popup.open('popupViewPerinfo03');
+        return false;
+    });
+    $('a[href="#popupViewPerinfo04"]').click(function(){
+        ui.popup.open('popupViewPerinfo04');
+        return false;
+    });
+    $('a[href="#popupViewPerinfo05"]').click(function(){
+        ui.popup.open('popupViewPerinfo05');
+        return false;
+    });
+
+});
+

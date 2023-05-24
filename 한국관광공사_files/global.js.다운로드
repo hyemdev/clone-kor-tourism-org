@@ -1,0 +1,1025 @@
+$(window).load(function(){
+	/*
+	checkBrowser();
+	if(!$.browser.msie){
+		if (window.addEventListener) { // W3C DOM
+			window.addEventListener("copy", (e) => {
+				popModalAlert("확인" , "보안 정책에 의해 복사를 허용하지 않습니다.");
+				e.preventDefault();
+				e.clipboardData.clearData("Text"); // 클립보드에 저장된 컨텐츠 삭제
+			});
+		}
+	}
+	*/
+});
+
+window.onbeforeunload = function(e){
+	//$(document.body).addClass("fade-out");
+	$(".rateProgress").html('<span style="width:100%"></span>');
+};
+
+$(window).scroll(function(){
+	if ( $( this ).scrollTop() > 200 ) {
+		$( '.moveTop' ).fadeIn();
+	} else {
+		$( '.moveTop' ).fadeOut();
+	}
+});
+
+$( document ).ready(function() {
+	/*
+	$('#searchText, #searchText2').autocomplete({
+		source: function(request, response) {
+			$.ajax({
+				url: '/search/autocompl',
+				data: {query: request.term},
+				datatype: 'json',
+				type: 'POST',
+				success: function(data){
+					//var jobj= JSON.parse(data);
+					var keywords = _.map(data.result[0].items, function(item) {
+						return item.keyword;
+					}).concat(_.map(data.result[1].items, function(item) {
+						return item.keyword;
+					}));
+					response(keywords);
+				}
+			});
+		},
+		minLength: 1,
+		focus: function( event, ui ) {
+			event.preventDefault();
+		}
+	});
+	*/
+
+	$('.moveTop').click( function() {
+		$( 'html, body' ).animate( { scrollTop : 0 }, 400 );
+		return false;
+	});
+
+	$('.btn-move-top').click( function() {
+		$( 'html, body' ).animate( { scrollTop : 0 }, 400 );
+		return false;
+	});
+
+	$('.faq-question a, .faq-question button').on('click', function() {
+		faqSlide($(this));
+		return false;
+	});
+});
+
+function faqSlide(obj) {
+	if(obj.parent().parent().parent().hasClass('active')){
+		obj.parent().parent().parent().find('.faq-answer').slideUp();
+		obj.parent().parent().parent().removeClass('active');
+    } else {
+    	$('.faq-list').find('.faq-answer').each(function(){
+    	    $(this).slideUp();
+    	});
+
+    	obj.parent().parent().parent().find('.faq-answer').slideDown();
+    	obj.parent().parent().parent().addClass('active').siblings('li').removeClass('active');
+    }
+}
+/*--------------------------------------------------------------
+	>> Util - 유틸리티
+--------------------------------------------------------------*/
+var transitionend = 'transitionend webkitTransitionEnd oTransitionEnd otransitionend';
+
+//콘솔뷰
+var consoleLog = function(value){
+	var delay = 3000;
+	var setTime = null;
+	var consoleHTML = '<div class="consoleLog"><div class="consoleLog-scroll"></div></div>';
+	if ($('.consoleLog').length == 0){$('body').append(consoleHTML)}
+	$('.consoleLog-scroll').append('<span class="consoleLog-item">'+value+'</span><br>');
+	clearTimeout(setTime);
+	setTime = setTimeout(function(){$('.consoleLog').fadeOut('fast', function(){$(this).remove()})}, delay);
+}
+// 스크립트파일 로드
+var setScriptLoader = function(url, id, callback){
+	if ($('#'+id).length == 0){
+		$('head').append('<script src="'+url+'" id="'+id+'"></script>');
+		if (callback){callback()}
+	}
+}
+// Attribute 설정
+var setAnchorAttr = function($this){
+	$this.each(function(){
+		if ($($(this).attr('href')).length && !$(this).is('[data-id]')){$(this).attr('data-id', $(this).attr('href'))}
+		else if ($($(this).attr('data-id')).length > 0 && $(this).is('a')){$(this).attr('href', $(this).attr('data-id'))}
+	})
+}
+// 실제값의 퍼센트 구하기 (실제값/최대값 * 100%)
+var getPercent = function(val, max){
+	var value = (val/max) * 100;
+	return value;
+}
+// 퍼센트로 실제값 구하기 (퍼센트/100% * 최대값)
+var getValue = function(val, max){
+	var value = (val/100) * max;
+	return value;
+}
+// 퍼센트 제외값 구하기 (최대값 - (퍼센트/100% * 최대값)
+var getRemain = function(val, max){
+	var value = max - ((val/100) * max);
+	return value;
+}
+// 정규식 반환
+var getRegExec = function(reg, str){
+	return reg.exec(str);
+}
+// 정규식 확인
+var getRegTest = function(reg, str){
+	return regex.test(str);
+}
+// 숫자 반올림
+var getNumRound = function(val, lens){
+	return Math.round(val/lens) * lens;
+}
+// 숫자 올림
+var getNumCeil = function(val, lens){
+	return Math.ceil(val/lens) * lens;
+}
+// 숫자 내림
+var getNumFloor = function(val, lens){
+	return Math.floor(val/lens) * lens;
+}
+// 숫자 콤마변환
+var getNumComma = function(val){
+	return val.toLocaleString();
+}
+// 숫자 콤마삭제
+var getNumCommaDel = function(val){
+	var num = parseFloat(val.replace(/,/gi,""));
+	if (isNaN(num)){return 0} else {return num}
+}
+// 소수점 변환
+var getNumDecimal = function(val){
+	return getRegTest('^[+-]?\d*(\.?\d*)$', val);
+}
+// 파라미터값 구하기
+var getParamiter = function(name){
+	var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+	if (results==null){
+		return null;
+	} else {
+		return results[1] || 0;
+	}
+}
+// Ajax 로드
+var callAjaxLoad = function(selector, frmName, callUrl, callback){
+	var dataString = $("#"+frmName).serialize();
+	$(selector).load(callUrl, dataString, callback);
+}
+// Ajax 실행
+var callAjax = function(target, frmName, sendUrl, callback) {
+	var dataString = $("#"+frmName).serialize();
+	$.ajax({
+		type:"POST",
+		url:sendUrl,
+		cache:false,
+		async:false,
+		dataType:"html",
+		data:dataString,
+		timeout:6000,
+		success:function(data){
+			// 통신이 성공적으로 이루어졌을때 이 함수를 타게 된다.
+			$("#"+target).html(data);
+			if (callback !==""){
+				callback;
+			}
+		},
+		/*complete:function(data){
+			// 통신이 실패했어도 완료가 되었을때 이함수를 타게된다.
+			// success 와 complete 둘 중 하나만 이용, 그렇지 않으면 두번실행
+		},*/
+		error:function(xhr, status, error){
+		}
+	});
+}
+// Document Target Length
+var callThisTarget = function($this, callback){
+	$(document).on('click focusin', function(e){
+		if ($this.has(e.target).length == 0){
+			if (callback){ callback() }
+		}
+	});
+}
+// Document Target Selector
+var callChildTarget = function($this, callback){
+	$(document).on('click focusin', function(e){
+		if ($(e.target).is($this) == false){
+			if (callback){ callback() }
+		}
+	})
+}
+
+/*
+	기능명칭 : SET FOCUS
+	기능상세 : 모달 노출시 배경포커스 잠금
+*/
+var setFocus = {
+	eleTabIdx : 'a, button, select, input, textarea, iframe', //키보드제어 요소
+	//포커스 비활성
+	disable : function($module){
+		var $siblings = $module.siblings();
+		$(".play-button-wrap .stop").each(function(){
+			 $(this).trigger('click'); //slider stop
+		 });
+		$siblings.not('[aria-hidden=true]').addClass('is-ariaHidden').attr({'aria-hidden':'true'});			// 자신의 아리아히든 설정
+		$siblings.filter(this.eleTabIdx).not('[tabindex]').addClass('is-tabindex-none').attr({'tabindex':'-1'});	// 자신의 탭인덱스 없는요소 설정
+		$siblings.filter('[tabindex=0]').addClass('is-tabindex-0').attr({'tabindex':'-1'});							// 자신의 탭인덱스 0 요소 설정
+		$siblings.find(this.eleTabIdx).not('[tabindex]').addClass('is-tabindex-none').attr({'tabindex':'-1'});		// 자식의 탭인덱스 없는요소 설정
+		$siblings.find('[tabindex=0]').addClass('is-tabindex-0').attr({'tabindex':'-1'});	// 자식의 탭인덱스 0 요소 설정
+	},
+	//포커스 활성화
+	enable : function(){
+		$('.is-ariaHidden').attr({'aria-hidden':'false'}).removeClass('is-ariaHidden'); // 모든 아리아히든 초기화
+		$('.is-tabindex-0').attr({'tabindex':'0'}).removeClass('is-tabindex-0');		// 모든 탭인덱스 0 이었던 요소 초기화
+		$('.is-tabindex-none').removeAttr('tabindex').removeClass('is-tabindex-none');	// 모든 탭인덱스 없었던 요소 초기화
+	},
+}
+
+/*
+	기능명칭 : SET SCROLL
+	기능상세 : 모달 노출시 배경스크롤링 잠금
+*/
+var setScroll = {
+	clsFixed : 'is-scroll-fixed',
+	scrTop : null,
+	//스크롤 비활성
+	disable : function(){
+		this.scrTop = $(window).scrollTop();
+		$('html, body').addClass(this.clsFixed);
+		$('body').scrollTop(this.scrTop);
+	},
+	//스크롤 활성화
+	enable : function(){
+		$('html, body').removeClass(this.clsFixed);
+		$(window).scrollTop(this.scrTop);
+	},
+}
+
+/*
+	기능명칭: Dimmer
+*/
+var dimmer = {
+	eleModule : '.dimmer',
+	lens      : 0,
+	open: function($module, selector, callback){
+		//console.log("dimmer open");
+		var _this = this;
+		_this.lens = _this.lens + 1;
+		//딤이 없는경우 생성
+		if ($(_this.eleModule).length == 0){ $('body').append('<div class="dimmer" aria-hidden="true"></div>') };
+		setTimeout(function(){ $(_this.eleModule).addClass(_this.selector).addClass('is-active'); }); //딤활성화
+		setScroll.disable(); //스크롤비활성
+		setFocus.disable($module); //초점비활성
+		if (callback){callback} //콜백이 있는경우 실행
+	},
+	close: function($module, selector, callback){
+		var _this = this;
+		_this.lens = this.lens - 1;
+		//딤을 호출하는 요소가 없는경우 닫기
+		//console.log(_this.lens);
+		if (_this.lens == 0){
+			setScroll.enable(); //스크롤활성화
+			setFocus.enable(); //초점활성화
+			$(_this.eleModule).removeClass('is-active'); //딤제거
+			$(_this.eleModule).one(transitionend, function(){
+				if (!$(this).hasClass('is-active')){
+					$(this).remove();
+					if (callback){ callback }
+				}
+			});
+		}
+	}
+}
+
+/*--------------------------------------------------------------
+>> Function - 함수
+--------------------------------------------------------------*/
+function formatDate(date) {
+	var d = new Date(date), month = '' + (d.getMonth() + 1), day = '' + d.getDate(), year = d.getFullYear();
+	if (month.length < 2) month = '0' + month;
+	if (day.length < 2) day = '0' + day;
+	return [year, month, day].join('-');
+}
+
+function formatDateKor(date) {
+	var d = new Date(date), month = '' + (d.getMonth() + 1), day = '' + d.getDate(), year = d.getFullYear();
+	return year+'년 '+month+'월 '+day+'일';
+}
+
+function openFacebook(){
+    window.open("https://www.facebook.com/fsckorea", "openFacebook");
+}
+
+function openTwiter(){
+    window.open("https://twitter.com/fsckorea", "openTwiter");
+}
+
+function openYoutube(){
+    window.open("https://www.youtube.com/channel/UCuJz-PXNMdWQr6TNM4htENw", "openYoutube");
+}
+
+function openBlog(){
+    window.open("https://blog.naver.com/blogfsc", "openBlog");
+}
+
+function openInstagram(){
+    window.open("https://www.instagram.com/fsc.go.kr/", "openInstagram");
+}
+
+function openNaver(){
+    window.open("https://search.naver.com/search.naver?sm=top_hty&fbm=0&ie=utf8&query=%EA%B8%88%EC%9C%B5%EC%9C%84%EC%9B%90%ED%9A%8C", "openNaver");
+}
+
+function closeWin(){
+	self.close();
+}
+
+function getParam(sname) {
+    var params = location.search.substr(location.search.indexOf("?") + 1);
+    var sval = "";
+    params = params.split("&");
+    for (var i = 0; i < params.length; i++) {
+        temp = params[i].split("=");
+        if ([temp[0]] == sname) { sval = temp[1]; }
+    }
+    return sval;
+}
+
+function fn_fileViewer(srvcId, upperNo, fileTy, fileNo) {
+	var formData = new FormData();
+    formData.append('srvcId', srvcId);
+    formData.append('upperNo', upperNo);
+    formData.append('fileTy', fileTy);
+    formData.append('fileNo', fileNo);
+
+    $.ajax({
+    	url: '/comm/fileViewer',
+    	type:'POST',
+    	data: formData,
+        dataType: 'json',
+        cache: false,
+        contentType: false,
+        processData: false,
+        beforeSend: function(){
+        	showLoading();
+        },
+        success: function (data) {
+        	hideLoading();
+        	if (data && data.error && data.error == -1) {
+            	window.open(data.url, 'fileViewer');
+            } else if (data && data.message) {
+            	alert(data.message);
+            } else {
+            	alert("오류가 발생했습니다. 관리자에게 문의 바랍니다.");
+            }
+        },
+		error: function(xhr, textStatus, errorThrown){
+			alert("오류가 발생했습니다. 관리자에게 문의 바랍니다.");
+			hideLoading();
+		}
+    });
+}
+
+function checkNoDate() {
+	if ($("#chkNoDate").is(":checked")) {
+		$('#srchBeginDt').val("");
+		$('#srchEndDt').val("");
+	} else {
+		$('#srchBeginDt').val(formatDate(new Date()));
+		addMonth(1);
+	}
+}
+
+function addDay(day) {
+	if (!$("#chkNoDate").is(":checked")) {
+		var startDate = $("#srchEndDt").val();
+		if (startDate == "") {
+			$('#srchEndDt').val(formatDate(new Date()));
+			startDate = $("#srchEndDt").val();
+		}
+		var date = new Date(startDate);
+		date.setDate(date.getDate() - day);
+		$('#srchBeginDt').val(formatDate(date));
+	}
+}
+
+function addMonth(month) {
+	if (!$("#chkNoDate").is(":checked")) {
+		var startDate = $("#srchEndDt").val();
+		if (startDate == "") {
+			$('#srchEndDt').val(formatDate(new Date()));
+			startDate = $("#srchEndDt").val();
+		}
+		var date = new Date(startDate);
+		date.setMonth(date.getMonth() - month);
+		$('#srchBeginDt').val(formatDate(date));
+	}
+}
+
+function showLoading() {
+	try {
+		$.LoadingOverlay('show',{
+			  image : ""
+			, fontawesome : "fa fa-spinner fa-spin"
+			, fontawesomeColor : "#FFFFFF"
+			, background  : "rgba(0,0,0,.8)"
+			, size : 7
+			, zIndex : 2000
+		});
+	} catch(e) {
+	}
+}
+
+function hideLoading() {
+	try {
+		$.LoadingOverlay('hide', true);
+	} catch(e) {
+	}
+}
+
+function checkEmail(str) {
+	var reg_email = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
+	if(!reg_email.test(str)) {
+		return false;
+	} else {
+		return true;
+	}
+}
+
+// 통합로그인
+function totalLogin() {
+	var retUrl = location.href;
+	if (retUrl.indexOf("/login") == -1 && retUrl.indexOf("/join") == -1 && retUrl.indexOf("/mber") == -1) {
+		$('#frmLoginForward [name="returnUrl"]').val(retUrl);
+	}
+	$("#frmLoginForward").attr("action", "/login");
+	$("#frmLoginForward").submit();
+}
+
+//통합로그아웃
+function totalLogout() {
+	var retUrl = location.href;
+	if (retUrl.indexOf("/login") == -1 && retUrl.indexOf("/join") == -1 && retUrl.indexOf("/mber") == -1) {
+		$('#frmLoginForward [name="returnUrl"]').val(retUrl);
+	}
+	$("#frmLoginForward").attr("action", "/login/logout");
+	$("#frmLoginForward").submit();
+}
+
+// 휴대폰 본인인증
+function openPCCWindow(){
+    var appWin = window.open('', 'PCCV3Window', 'width=430, height=560, resizable=1, scrollbars=no, status=0, titlebar=0, toolbar=0, left=300, top=200' );
+
+    if (appWin == null){
+		popModalAlert("확인" , "※ 윈도우 XP SP2 또는 인터넷 익스플로러 7 사용자일 경우에는 화면 상단에 있는 팝업 차단 알림줄을 클릭하여 팝업을 허용해 주시기 바랍니다.\n※ MSN,야후,구글 팝업 차단 툴바가 설치된 경우 팝업허용을 해주시기 바랍니다.");
+    } else {
+    	appWin.focus();
+    }
+
+    document.reqPCCForm.action = 'https://pcc.siren24.com/pcc_V3/jsp/pcc_V3_j10_v2.jsp';
+    document.reqPCCForm.target = 'PCCV3Window';
+}
+
+//휴대폰 본인인증(나이스)
+function openPassPopup(){
+	var appWin = window.open('', 'popupPassChk', 'width=500, height=550, top=100, left=100, fullscreen=no, menubar=no, status=no, toolbar=no, titlebar=yes, location=no, scrollbar=no');
+
+	if (appWin == null){
+		popModalAlert("확인" , "※ 윈도우 XP SP2 또는 인터넷 익스플로러 7 사용자일 경우에는 화면 상단에 있는 팝업 차단 알림줄을 클릭하여 팝업을 허용해 주시기 바랍니다.\n※ MSN,야후,구글 팝업 차단 툴바가 설치된 경우 팝업허용을 해주시기 바랍니다.");
+    } else {
+    	appWin.focus();
+    }
+
+    document.formNicePass.target = 'popupPassChk';
+    document.formNicePass.action = 'https://nice.checkplus.co.kr/CheckPlusSafeModel/checkplus.cb';
+    document.formNicePass.submit();
+}
+
+//휴대폰 본인인증(드림시큐리티)
+
+function openDRMOKWindow(){
+	//window.name = 'sendJsp';
+	var appWin = window.open('', 'DRMOKWindow', 'width=425,height=550,scrollbars=no,toolbar=no,location=no,directories=no,status=no' );
+
+	if(appWin == null){
+		alert(" ※ 윈도우 XP SP2 또는 인터넷 익스플로러 7 사용자일 경우에는 \n    화면 상단에 있는 팝업 차단 알림줄을 클릭하여 팝업을 허용해 주시기 바랍니다. \n\n※ MSN,야후,구글 팝업 차단 툴바가 설치된 경우 팝업허용을 해주시기 바랍니다.");
+	}else{
+		appWin.focus();
+	}
+
+	document.formDreamPass.target = 'DRMOKWindow';
+	document.formDreamPass.submit();
+
+}
+
+//!* 1. 간편인증 인증요청  드림시큐리티  *!/
+function init_popup_auth(cd) {
+/*	개발 api에 나와있는 걸로 테스트
+	eziok_std_process(간편인증 인증요청 생성 URL, 웹브라우져타입[WB:웹브라우져, MB:모바일웹, MWV:모바일웹View], callback함수명)*/
+	// eziok_std_process("/easyAuth/eziok_std_request.jsp", "WB", "printResult");
+
+	//cd값으로 분기처리
+	if(cd=='ps'){ //산업포털
+		eziok_std_process("/fnct/kto/mber/easyAuthTotal", "WB", "easyAuthPsResult");
+	}
+
+	if(cd=='kto'){ //관광공사
+		eziok_std_process("/fnct/kto/mber/easyAuthTotal", "WB", "easyAuthKtoResult");
+	}
+}
+
+/* 2. 간편인증 결과 수신 callback 함수 예시 드림시큐리티 */
+function printResult(data) {
+	var resultCode = data.split("|")[0];
+	var resultMsg = data.split("|")[1];
+	if(resultCode == 0) {
+		// 간편인증 성공 완료시 처리 부분
+		document.querySelector("#result").textContent = resultMsg;
+	} else {
+		// 간편인증 실패 완료시 처리 부분
+		alert("Error : " + resultMsg);
+	}
+}
+
+//산업포털 간편인증  완료시 callback 함수
+function easyAuthPsResult(data){
+	var resultCode = data.split("|")[0];
+	var resultMsg = data.split("|")[1];
+	if(resultCode == 0) {
+		goAuthCallback();
+	} else {
+		// 간편인증 실패 완료시 처리 부분
+		alert("Error : " + resultMsg);
+	}
+}
+//관광공사 간편인증  완료시 callback 함수
+function easyAuthKtoResult(data){
+	var resultCode = data.split("|")[0];
+	var resultMsg = data.split("|")[1];
+	if(resultCode == 0) {
+		//goAuthCallback();
+		locationKtoUrl();
+	} else {
+		// 간편인증 실패 완료시 처리 부분
+		alert("Error : " + resultMsg);
+	}
+}
+
+locationKtoUrl = function(){
+	location.href = '/join/resultAuthEasyAlert';
+}
+// I-Pin
+function fnIPinPopup(){
+	var appWin = window.open('', 'popupIPIN2', 'width=450, height=550, top=100, left=100, fullscreen=no, menubar=no, status=no, toolbar=no, titlebar=yes, location=no, scrollbar=no');
+
+	if (appWin == null){
+		popModalAlert("확인" , "※ 윈도우 XP SP2 또는 인터넷 익스플로러 7 사용자일 경우에는 화면 상단에 있는 팝업 차단 알림줄을 클릭하여 팝업을 허용해 주시기 바랍니다.\n※ MSN,야후,구글 팝업 차단 툴바가 설치된 경우 팝업허용을 해주시기 바랍니다.");
+    } else {
+    	appWin.focus();
+    }
+
+	document.formIpin.target = "popupIPIN2";
+	document.formIpin.action = "https://cert.vno.co.kr/ipin.cb";
+	document.formIpin.submit();
+}
+
+function checkBrowser() {
+	var matched, browser;
+	jQuery.uaMatch = function (ua) {
+	    ua = ua.toLowerCase();
+
+	    var match = /(chrome)[ \/]([\w.]+)/.exec(ua) ||
+	        /(webkit)[ \/]([\w.]+)/.exec(ua) ||
+	        /(opera)(?:.*version|)[ \/]([\w.]+)/.exec(ua) ||
+	        /(msie) ([\w.]+)/.exec(ua) ||
+	        ua.indexOf("compatible") < 0 && /(mozilla)(?:.*? rv:([\w.]+)|)/.exec(ua) ||
+	        [];
+
+	    return {
+	        browser: match[1] || "",
+	        version: match[2] || "0"
+	    };
+	};
+
+	matched = jQuery.uaMatch(navigator.userAgent);
+	browser = {};
+
+	if (matched.browser) {
+	    browser[matched.browser] = true;
+	    browser.version = matched.version;
+	}
+
+	// Chrome is Webkit, but Webkit is also Safari.
+	if (browser.chrome) {
+	    browser.webkit = true;
+	} else if (browser.webkit) {
+	    browser.safari = true;
+	}
+
+	jQuery.browser = browser;
+
+	return browser;
+}
+
+function imgPreview(srvcId,streFileNm) {
+	//$("#imgPreview").attr("src","/comm/getImage?srvcId=" + srvcId + "&upperNo=" + upperNo + "&fileTy=" + fileTy + "&fileNo=" + fileNo);
+	$("#imgPreview").attr("src","/media/img/" + srvcId + "/" + streFileNm);
+}
+
+function layerOpen(){
+    var $this = $('.js-popuplayer');
+    $this.on('click',function(){
+        var $layer = $(this).attr('href');
+        var $elWidth = ~~($($layer).outerWidth()),
+        	$elHeight = ~~($($layer).outerHeight()),
+		    docWidth = $(window).width(),
+		    docHeight = $(window).height();
+
+		// 화면의 중앙에 레이어를 띄운다.
+        $($layer).css({
+	    	top: (docHeight - $elHeight)/2,
+	        left: (docWidth - $elWidth)/2
+	    });
+
+        $($layer).show();
+        $('.mask-layer').show();
+    })
+    $('.layer-popup-close a').on('click',function(){
+        $('.layer-popup-wrap').hide();
+        $('.mask-layer').hide();
+    });
+}
+
+function swalert(msg, callback) {
+	var arrMsg = msg.split("\n");
+
+	swal({
+		type: 'info', // Alert 타입
+		title: arrMsg[0], // Alert 제목
+		text: arrMsg[1], // Alert 내용
+		confirmButtonColor: '#7f6e63',
+		confirmButtonText: '확인'
+	}, function(result) {
+		if (callback != null) {
+			callback(result);
+		}
+	});
+}
+
+function swconfirm(msg, callback) {
+	var arrMsg = msg.split("\n");
+
+	swal({
+        title: arrMsg[0],
+        text: arrMsg[1],
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#7f6e63',
+        cancelButtonColor: '#d33',
+        confirmButtonText: '확인',
+        cancelButtonText: '취소'
+    }, function(result) {
+    	callback(result);
+	});
+}
+
+function swconfirm2(msg, callback) {
+	var arrMsg = msg.split("\n");
+
+	swal({
+        title: arrMsg[0],
+        text: arrMsg[1],
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#7f6e63',
+        cancelButtonColor: '#d33',
+        confirmButtonText: '확인',
+        cancelButtonText: '취소',
+        closeOnConfirm : false,
+		closeOnCancel : true
+    }, function(result) {
+    	callback(result);
+	});
+}
+
+function nogrant() {
+	popModalAlert("확인" , "해당 글은 작성자만 열람할 수 있습니다.");
+}
+
+function memberOnly() {
+	swconfirm("로그인이 필요한 기능입니다.\n로그인 화면으로 이동하시겠습니까?",function(result){
+		if (result) {
+        	totalLogin();
+        }
+	});
+}
+
+function memberOnly2() {
+	popModalAlert("확인" , "간편로그인 회원은 사용할 수 없는 기능입니다.\n통합로그인 계정으로 재접속해 주십시오.")
+}
+
+function chldPresOnly() {
+	popModalAlert("확인" , "어린이기자단만 사용가능합니다.");
+}
+
+function chldCmteOnly() {
+	popModalAlert("확인" , "아동참여위원만 사용가능합니다.");
+}
+
+function doSearch() {
+	$('#frmSearch').submit();
+}
+
+function searchByCategory(category) {
+	$('#colTarget').val(category);
+	$('#curPage').val(1);
+	$('#frmSearch').submit();
+}
+
+function searchByOrder(order) {
+	$('#sortType').val(order);
+	$('#curPage').val(1);
+	$('#frmSearch').submit();
+}
+
+function searchByRange(range) {
+	$('#rangeTarget').val(range);
+	$('#curPage').val(1);
+	$('#frmSearch').submit();
+}
+
+function searchByPage(page) {
+	$('#curPage').val(page);
+	$('#frmSearch').submit();
+}
+
+function searchText(srchText) {
+	if (srchText != null && srchText != '') {
+		$("input[name='searchText'], frmSearch").val(srchText);
+	}
+	$('#curPage').val(1);
+	$("#frmSearch").submit();
+}
+
+function showMap(obj) {
+	var addr = $(obj).data("addr");
+	var addrNm = $(obj).data("addrnm");
+	window.open("/humanframe-cms/mapView?addr="+encodeURIComponent(addr)+"&addrNm="+encodeURIComponent(addrNm), "mapView", "width=600, height=400");
+}
+
+function showMapPos(obj) {
+	var mapx = $(obj).data("mapx");
+	var mapy = $(obj).data("mapy");
+	var addrNm = $(obj).data("addrnm");
+	window.open("/humanframe-cms/mapPosView?mapx="+mapx+"&mapy="+mapy+"&addrNm="+encodeURIComponent(addrNm), "mapView", "width=600, height=400");
+}
+
+function strip_tag(str){
+    return str.replace(/(<([^>]+)>)/ig,"");
+}
+
+function f_checkNumber(obj){
+	obj.value = obj.value.replace(/[^0-9.-]/g, '').replace(/(\..*)\./g, '$1');
+}
+
+function date_mask(objValue) {
+	var v = objValue.replace("--", "-");
+
+    if (v.match(/^\d{4}$/) !== null) {
+        v = v + '-';
+    } else if (v.match(/^\d{4}\-\d{2}$/) !== null) {
+        v = v + '-';
+    }
+
+    return v;
+}
+
+//날짜 유효성 체크 (윤달 포함)
+function fn_isDate(vDate) {
+    var vValue = vDate;
+    var vValue_Num = vValue.replace(/[^0-9]/g, ""); //숫자를 제외한 나머지는 예외처리 합니다.
+    if (fn_toNull(vValue_Num) == "") {
+        popModalAlert("확인" , "날짜를 입력해 주세요.");
+        return false;
+    }
+
+    //8자리가 아닌 경우 false
+    if (vValue_Num.length != 8) {
+        popModalAlert("확인" , "날짜를 2020-01-01 형식으로 입력해 주세요.");
+        return false;
+    }
+
+    //8자리의 yyyymmdd를 원본 , 4자리 , 2자리 , 2자리로 변경해 주기 위한 패턴생성을 합니다.
+    var rxDatePattern = /^(\d{4})(\d{1,2})(\d{1,2})$/;
+    var dtArray = vValue_Num.match(rxDatePattern);
+    if (dtArray == null) {
+        return false;
+    }
+
+    //0번째는 원본 , 1번째는 yyyy(년) , 2번재는 mm(월) , 3번재는 dd(일) 입니다.
+    dtYear = dtArray[1];
+    dtMonth = dtArray[2];
+    dtDay = dtArray[3];
+
+    //yyyymmdd 체크
+    if (dtMonth < 1 || dtMonth > 12) {
+        popModalAlert("확인" , "존재하지 않은 월을 입력하셨습니다.\n다시 한번 확인 해주세요");
+        return false;
+    } else if (dtDay < 1 || dtDay > 31) {
+        popModalAlert("확인" , "존재하지 않은 일을 입력하셨습니다.\n다시 한번 확인 해주세요");
+        return false;
+    } else if ((dtMonth == 4 || dtMonth == 6 || dtMonth == 9 || dtMonth == 11) && dtDay == 31) {
+        popModalAlert("확인" , "존재하지 않은 일을 입력하셨습니다.\n다시 한번 확인 해주세요");
+        return false;
+    } else if (dtMonth == 2) {
+        var isleap = (dtYear % 4 == 0 && (dtYear % 100 != 0 || dtYear % 400 == 0));
+        if (dtDay > 29 || (dtDay == 29 && !isleap)) {
+            popModalAlert("확인" , "존재하지 않은 일을 입력하셨습니다.\n다시 한번 확인 해주세요");
+            return false;
+        }
+    }
+    return true;
+}
+
+function fn_toNull(data) {
+	// undifined나 null을 null string으로 변환하는 함수.
+	if (String(data) == 'undefined' || String(data) == 'null') {
+		return '';
+	} else {
+		return data;
+	}
+}
+
+// 찾아오시는 길 - 위치안내 문자전송
+function openLocSmsForm(locTy) {
+	var url = "/comm/popup/locSmsForm?locTy="+locTy;
+	var width = 600;
+    var height = 380;
+	var top = (screen.availHeight - height) / 2;
+    var left = (screen.availWidth - width) / 2;
+	var appWin = window.open(url, "", "width=" + width + ",height=" + height + ", scrollbars=no, top=" + top + ", left=" + left);
+	appWin.focus();
+}
+
+function calcHeight(iframeId) {
+	var the_height = document.getElementById(iframeId).contentWindow.document.body.offsetHeight;
+	document.getElementById(iframeId).height = the_height;
+	document.getElementById(iframeId).style.overflow = "hidden";
+}
+
+//레이어팝업 : 쿠키 저장
+function setCookie( name, value, expiredays ) {
+    var todayDate = new Date();
+    todayDate = new Date(parseInt(todayDate.getTime() / 86400000) * 86400000 + 54000000);
+    if ( todayDate > new Date() ){
+        expiredays = expiredays - 1;
+    }
+    todayDate.setDate( todayDate.getDate() + expiredays );
+    document.cookie = name + "=" + escape( value ) + "; path=/; expires=" + todayDate.toGMTString() + ";"
+}
+
+// 레이어팝업 : 쿠키 가져오기
+function getCookie( name ) {
+    var nameOfCookie = name + "=";
+    var x = 0;
+    while ( x <= document.cookie.length ){
+        var y = (x+nameOfCookie.length);
+        if ( document.cookie.substring( x, y ) == nameOfCookie ) {
+            if ( (endOfCookie=document.cookie.indexOf( ";", y )) == -1 )
+            endOfCookie = document.cookie.length;
+            return unescape( document.cookie.substring( y, endOfCookie ) );
+        }
+        x = document.cookie.indexOf( " ", x ) + 1;
+        if ( x == 0 ) break;
+    }
+    return "";
+}
+
+// 점자 처리(이력저장)
+function fn_eDotXpress(menuNo, menuNm, actTy){
+	$.ajax({
+		url: '/comm/eDotView',
+		data: {menuNo: menuNo},
+		type: 'POST',
+		success: function(data){
+			if (actTy == 'VW') {
+				openBrlViewer(menuNm);
+			} else if (actTy == 'DL') {
+				exportBrl('brl', menuNm);
+			}
+		}
+	});
+}
+
+//----------------------------------------------------------------------
+// 현재 페이지나 특정 element를 점역하여 점자파일로 내려받는다.
+// tableId를 생략하면 현재 페이지를 점역하고 전달하면 해당 표만 점역한다.
+// 현재 페이지 전체는 xls로 받을 수 없고 하나의 표만 xls로 받을 수 있다.
+//----------------------------------------------------------------------
+function exportBrl(fileType, fileTitle, tableId) {
+    var docData = atsoft.edotxpress.HtmlParser.parseHtml(tableId);
+    if (docData != null) {
+        var invoker = new atsoft.edotxpress.EDotServerInvoker("/EDotXPressHtml/brlgen");
+        invoker.addParameter("tag_record",  docData  );
+        invoker.addParameter("export_type", fileType ); // btag, brl, brf, xls
+        invoker.addParameter("export_name", fileTitle); // 확장자를 제외한 저장할 파일명
+
+        //invoker.invoke();
+        invoker.invoke(errorCallback);
+    } else {
+        swalert(atsoft.errorManager.getErrorMsg("[brl 파일 생성 실패]"));
+    }
+}
+
+/* 오류 발생시 상세 메시지 대신 간단한 메시지를 출력할 경우 */
+function errorCallback(errMgr) {
+    var msg = errMgr.getErrorMsg("[brl 파일 생성 실패]"); // cf. errMgr.getErrorCode()
+    swalert(msg);
+}
+
+//----------------------------------------------------------------------
+// 현재 페이지나 특정 element를 점역하여 점자뷰어로 보여준다.
+// braille_viewer.html에서 opener.docData를 사용하는데 도메인이 서로 다르면 CORS가 발생하므로 동일한 도메인에 있어야 한다.
+//----------------------------------------------------------------------
+var popupWnd = null;
+var popupParam = {};
+function openBrlViewer(fileTitle, tableId) {
+    if (popupWnd != null) {
+        popupWnd.close();
+    }
+
+    var docData = atsoft.edotxpress.HtmlParser.parseHtml(tableId);
+    if (docData != null) {
+        popupParam.svrUrl    = "/EDotXPressHtml/brlgen";
+        popupParam.docData   = docData;
+        popupParam.fileTitle = fileTitle;
+        popupParam.enableXls = atsoft.util.misc.isEmpty(tableId) ? "false" : "true";;
+
+        popupWnd = atsoft.util.window.popup("/EDotXPressHtml/viewer/braille_viewer.html", "eDotXPress Viewer", 900, 600, "resizable=yes, scrollbars=no");
+    } else {
+        swalert(atsoft.errorManager.getErrorMsg("[brl 파일 생성 실패]"));
+    }
+}
+
+/* textarea 글자수 체크 */
+function fnChkByte(obj, maxByte) {
+    var str = obj.value;
+    var str_len = str.length;
+    var rbyte = 0;
+    var rlen = 0;
+    var one_char = "";
+    var str2 = "";
+
+    for(var i=0; i<str_len; i++) {
+        one_char = str.charAt(i);
+        if(escape(one_char).length > 4) {
+            rbyte += 2;
+        } else {
+            rbyte++;
+        }
+
+        if(rbyte <= maxByte){
+            rlen = i+1;
+        }
+     }
+
+     if(rbyte > maxByte) {
+        alert(maxByte + "자까지만 입력할 수 있습니다.")
+        str2 = str.substr(0,rlen);
+        obj.value = str2;
+        fnChkByte(obj, maxByte);
+     } else {
+    	$(".char-now").text(rbyte);
+     }
+}
+
+//----------------------------------------------------------------------
+// 채팅창 팝업관리
+// Chrome에서 팝업창 닫을 때 beforeunload 이벤트 발생하지 않는 문제가 있어서 사용함
+//----------------------------------------------------------------------
+var wsSessionId = "";
+
+function openChat(iWidth, iHeight) {
+	var popChat = window.open("/chat","chatRoom","width="+iWidth+", height="+iHeight+", scrollbars=0");
+
+	$(popChat).load(function(){
+		$(popChat).unload(function(){
+			if (wsSessionId != "") {
+				$.ajax({
+					url: '/chat/closeSession',
+					data: {sessionId: wsSessionId},
+					type: 'GET',
+					success: function(data){
+					}
+				});
+			}
+		});
+	});
+}
