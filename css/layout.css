@@ -33,4 +33,13 @@ body {
 
 /* 공통클래스 */
 .inner {
+  max-width: 1420px;
+}
+
+.clearfix::after {
+  content: "";
+  position: relative;
+  display: block;
+  width: 100%;
+  clear: both;
 }
